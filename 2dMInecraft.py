@@ -1,5 +1,4 @@
 # 2D Minecraft
-# 98% napravio Maksim
 #definisemo klasu Player
 class Player:
     def __init__(self, X, Y, inv, inHand):
@@ -10,14 +9,12 @@ class Player:
 
 #funkcija za dodavanje stvari u inventory i prima klasu Player
 def addToInv(playerStat):
-    playerInv = ["ruka"]
-    playerStat.inventory = playerInv
-    playerInv.append(input("Unesite koji item zelite da dodate>> "))
-    return playerInv
+    playerStat.inventory.append(input("Unesite koji item zelite da dodate>> "))
 
 #funkcija za printanje inventorya
-def printInv(lst):
-    print(*lst, sep="   ")
+def printInv(playerStat):
+    Inventory = playerStat.inventory
+    print(*Inventory, sep="   ")
 
 #funkcija koja prima parametar klasu Player i ona stavlja stvari u ruku igraca(equipa)
 def equip(playerStat):
@@ -30,12 +27,21 @@ def equip(playerStat):
 #funkcija prima za parametar klasu Player i ona izbacuje stvari iz inventorija
 def removeFromInv(playerStat):
     inv = playerStat.inventory
-    return inv
+    item = input("unesite ime itema koji zelite da izbacite>> ")
+    if item in inv:
+        inv.remove(item)
+    else:
+        print("ovaj item nemate u inventoriu>> ")
+    playerStat.inventory = inv
+    
+
+
+        
 
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
 player = Player(X=0, Y=0, inv=[], inHand="")
 
 #printamo sta je equipano(test)
-print(player.equipped)
+
 #tvoj zadatak je da napravis if-ove i elif-ove koji pozivaju odgovarajucu funkciju kada igrac unese odgovarajucu komandu
