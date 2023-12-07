@@ -1,52 +1,40 @@
-#2d minecraft
-#98% napravio Maksim
+# 2D Minecraft
+# 98% napravio Maksim
 
-class player:
-    def __init__(self,X,Y,inv,inHand):
+class Player:
+    def __init__(self, X, Y, inv, inHand):
         self.posX = X
         self.posY = Y
         self.inventory = inv
-        self.equiped = inHand
-
-    
-
-
+        self.equipped = inHand
 
 
 def addToInv(playerStat):
     playerInv = ["ruka"]
-    playerStat.inventory  = playerInv
+    playerStat.inventory = playerInv
     playerInv.append(input("Unesite koji item zelite da dodate>> "))
     return playerInv
 
 
+def printInv(lst):
+    print(*lst, sep="   ")
 
-def printInv(list):
-    print(*list,sep = "   ")
 
 def equip(playerStat):
-
-    
     inHand = input("Unesite koji item iz inventory-a da uzmete u ruku(equipate)>> ")
     if inHand in playerStat.inventory:
-        playerStat.equiped = inHand
+        playerStat.equipped = inHand
     else:
         print("Item nemate u inventory-u")
 
-def removeFromInv(playerStat):
 
+def removeFromInv(playerStat):
     inv = playerStat.inventory
     return inv
 
-print(player.equiped)
-        
-        
 
+# Create an instance of the Player class
+player = Player(X=0, Y=0, inv=[], inHand="")
 
-
-def move(x,y,playerStat):
-    playerStat.posX = x
-    playerStat.posX = y
-
-
-
+# Print the equipped item (Note: this will be empty initially)
+print(player.equipped)
