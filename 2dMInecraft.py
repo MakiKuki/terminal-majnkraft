@@ -33,6 +33,12 @@ def removeFromInv(playerStat):
     else:
         print("ovaj item nemate u inventoriu>> ")
     playerStat.inventory = inv
+
+def move(playerStat):
+    playerStat.posX = input("Unesite nove X koordinate>> ")
+    playerStat.posY = input("Unesite Y koordinate>> ")
+    print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
+
     
 
 
@@ -45,3 +51,6 @@ player = Player(X=0, Y=0, inv=[], inHand="")
 #printamo sta je equipano(test)
 
 #tvoj zadatak je da napravis if-ove i elif-ove koji pozivaju odgovarajucu funkciju kada igrac unese odgovarajucu komandu
+move(player)
+###########################################################################################################################################################
+###########################################################################################################################################################
