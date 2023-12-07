@@ -26,7 +26,7 @@ def equip(playerStat):
         playerStat.equipped = inHand
     else:
         print("Item nemate u inventory-u")
-
+ 
 
 def removeFromInv(playerStat):
     inv = playerStat.inventory
