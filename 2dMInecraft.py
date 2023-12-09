@@ -1,15 +1,37 @@
 # 2D Minecraft
 #definisemo klasu Player
+
+resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak"]
+
+kraft = {
+    "cekic": ["metal","drvo"],
+    "mac": ["cekic","metal","drvo"],
+    "kramp": ["cekic","metal","drvo"],
+    "sjekira":["mac","cekic","metal","drvo"],
+    "lopata":["cekic",],
+    "krevet": ["drvo","cvijet"],
+    "brasno": ["psenica"],
+    "hljeb": ["brasno"]
+
+}
+
 class Player:
     def __init__(self, X, Y, inv, inHand):
-        self.posX = X
+        self.posX: X
         self.posY = Y
         self.inventory = inv
         self.equipped = inHand
 
 #funkcija za dodavanje stvari u inventory i prima klasu Player
-def addToInv(playerStat):
-    playerStat.inventory.append(input("Unesite koji item zelite da dodate>> "))
+def addToInv(playerStat,res):
+
+    unos = input("Unesite koji item zelite da dodate>> ")
+    if unos in res:
+
+        playerStat.inventory.append(unos)
+        print(unos,'je sad u vasem inventoriu')
+    else:
+        print("resors nepoznat")
 
 #funkcija za printanje inventorya
 def printInv(playerStat):
@@ -39,12 +61,32 @@ def move(playerStat):
     playerStat.posY = input("Unesite Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
-def craft(playerStat):
-    print("")
+def craft(playerStat,kraf):
+
+    kra = list(kraf)
     print(*playerStat.inventory,sep = "   ")
+    print("Od ovih resursa ce te nesto kraftati")
 
-    playerStat.inventory.append("something")#ustvari return
+    unos = input("Koji item hocete da kraftate>> ")
 
+    if not unos in kra:
+        print("Item nije prepoznat")
+        return 0
+    
+
+    if not kraf[unos] in playerStat.inventory:
+        print(*"Nemate zadane iteme (",kraf[unos],")",sep = " ")
+        return 0
+    
+
+    playerStat.inventory.remove(kraf[unos])
+
+    playerStat.inventory.append(unos)
+
+    print("Uspjesno se kraftali",unos)
+
+
+    
 
 
 
@@ -52,12 +94,12 @@ def craft(playerStat):
 
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
-player = Player(X=0, Y=0, inv=[], inHand="")
+player = Player(X=0, Y=0, inv=["hand",], inHand="hand")
 
 #printamo sta je equipano(test)
 
 #tvoj zadatak je da napravis if-ove i elif-ove koji pozivaju odgovarajucu funkciju kada igrac unese odgovarajucu komandu
-craft(player)
+craft(player,kraft)
 ###########################################################################################################################################################
 ###########################################################################################################################################################
 
