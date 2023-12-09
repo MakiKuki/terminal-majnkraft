@@ -77,7 +77,7 @@ def craft(playerStat,kraf):
     if not kraf[unos] in playerStat.inventory:
         print(*"Nemate zadane iteme (",kraf[unos],")",sep = " ")
         return 0
-    
+    #hello,open the noor
 
     playerStat.inventory.remove(kraf[unos])
 
