@@ -1,6 +1,6 @@
 # 2D Minecraft
 #definisemo klasu Player
-
+print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte pomoc")
 resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak"]
 
 kraft = {
@@ -61,46 +61,70 @@ def move(playerStat):
     playerStat.posY = input("Unesite Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
-def craft(playerStat,kraf):
-
+def craft(playerStat, kraf):
     kra = list(kraf)
-    print(*playerStat.inventory,sep = "   ")
+    print(*playerStat.inventory, sep="   ")
     print("Od ovih resursa ce te nesto kraftati")
 
     unos = input("Koji item hocete da kraftate>> ")
 
-    if not unos in kra:
+    if unos not in kra:
         print("Item nije prepoznat")
         return 0
-    
 
-    if not kraf[unos] in playerStat.inventory:
-        print(*"Nemate zadane iteme (",kraf[unos],")",sep = " ")
+    if not set(kraf[unos]).issubset(playerStat.inventory):
+        print("Nemate zadane iteme (", *kraf[unos], ")", sep=" ")
         return 0
-    #hello,open the noor
 
-    playerStat.inventory.remove(kraf[unos])
+    for item in kraf[unos]:
+        playerStat.inventory.remove(item)
 
     playerStat.inventory.append(unos)
 
-    print("Uspjesno se kraftali",unos)
+    print("Uspjesno ste kraftali", unos)
 
-
-    
-
-
-
-        
+    #hello,open the noor
 
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
 player = Player(X=0, Y=0, inv=["hand",], inHand="hand")
 
-#printamo sta je equipano(test)
+app = True
+while app == True:
+    unos = input("Unesite komandu{> ")
 
-#tvoj zadatak je da napravis if-ove i elif-ove koji pozivaju odgovarajucu funkciju kada igrac unese odgovarajucu komandu
-craft(player,kraft)
-###########################################################################################################################################################
-###########################################################################################################################################################
+
+    if unos == "dodaj":
+        addToInv(player,resouces)
+
+    elif unos == "torba":
+        printInv(player)
+
+    elif unos == "uzmi":
+        equip(player)
+
+    elif unos == "pomjeri":
+        move(player)
+
+    elif unos == "izbaci":
+        removeFromInv(player)
+
+    elif unos == "napravi":
+        craft(player,kraft)
+
+    elif unos == "kraj":
+        app = False
+
+    elif unos == "pomoc":
+        print("Dobrodosli u terminal-minecraft")
+        print("Da dodate stvari u torbu koristite 'dodaj' komandu")
+        print("Da bi vidjeli sta imate u torbi samo ukucajte 'torba'")
+        print("Da bi uzeli item iz torbe u terminal napisite 'uzmi'")
+        print("Da bi promjenili lokaciju igraca ukucajte 'pomjeri'")
+        print("Da bi izbacili item iz torbe koristite komandu 'izbaci'")
+        print("Da bi napravili nesto od resorsa u torbi ukucajte 'napravi'")
+        print("Da bi izasli iz igre ukucajte 'kraj'")
+    else:
+        print("komanda nije validna")
 
 
