@@ -39,7 +39,13 @@ def move(playerStat):
     playerStat.posY = input("Unesite Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
-    
+def craft(playerStat):
+    print("")
+    print(*playerStat.inventory,sep = "   ")
+
+    playerStat.inventory.append("something")#ustvari return
+
+
 
 
         
@@ -51,6 +57,9 @@ player = Player(X=0, Y=0, inv=[], inHand="")
 #printamo sta je equipano(test)
 
 #tvoj zadatak je da napravis if-ove i elif-ove koji pozivaju odgovarajucu funkciju kada igrac unese odgovarajucu komandu
-move(player)
+craft(player)
 ###########################################################################################################################################################
 ###########################################################################################################################################################
+
+
+
