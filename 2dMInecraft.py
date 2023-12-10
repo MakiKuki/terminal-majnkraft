@@ -1,8 +1,8 @@
 # 2D Minecraft
 #definisemo klasu Player
 print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte pomoc")
-resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak"]
-
+resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","plastika","zlato","voda","jabuka"]
+notResouces = ["cekic","mac","kramp","sjekira","lopata"]
 kraft = {
     "cekic": ["metal","drvo"],
     "mac": ["cekic","metal","drvo"],
@@ -11,8 +11,12 @@ kraft = {
     "lopata":["cekic",],
     "krevet": ["drvo","cvijet"],
     "brasno": ["psenica"],
-    "hljeb": ["brasno"]
-
+    "tjesto":["brasno","voda"],
+    "hljeb": ["tjesto"],
+    "cigla":["kamen","pjesak"],
+    "kanta":["metal","cekic","voda"],
+    "kanta_vode":["kanta","voda"],
+    "zlatna_jabuka":["jabuka","zlato"]
 }
 
 class Player:
@@ -62,7 +66,7 @@ def move(playerStat):
     playerStat.posY = input("Unesite Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
-def craft(playerStat, kraf):
+def craft(playerStat, kraf,Nres):
     kra = list(kraf)
     print(*playerStat.inventory, sep="   ")
     print("Od ovih resursa ce te nesto kraftati")
@@ -78,7 +82,8 @@ def craft(playerStat, kraf):
         return 0
 
     for item in kraf[unos]:
-        playerStat.inventory.remove(item)
+        if not item in Nres:
+            playerStat.inventory.remove(item)
 
     playerStat.inventory.append(unos)
 
@@ -111,7 +116,7 @@ while app == True:
         removeFromInv(player)
 
     elif unos == "napravi":
-        craft(player,kraft)
+        craft(player,kraft,notResouces)
 
     elif unos == "kraj":
         app = False
