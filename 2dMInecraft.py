@@ -43,6 +43,7 @@ def equip(playerStat):
     inHand = input("Unesite koji item iz inventory-a da uzmete u ruku(equipate)>> ")
     if inHand in playerStat.inventory:
         playerStat.equipped = inHand
+        #hello hi an Tshus
     else:
         print("Item nemate u inventory-u")
  
@@ -126,5 +127,3 @@ while app == True:
         print("Da bi izasli iz igre ukucajte 'kraj'")
     else:
         print("komanda nije validna")
-
-
