@@ -1,14 +1,17 @@
+import random
 # 2D Minecraft
 #definisemo klasu Player
 print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte pomoc")
-resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","plastika","zlato","voda","jabuka"]
+resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","plastika","zlato","jabuka","ugalj"]
 notResouces = ["cekic","mac","kramp","sjekira","lopata"]
+bioms = ["livadi","sumi","snjezomi_biomu","okeanu","pustinji","savani","kanjonu"]
+
 kraft = {
     "cekic": ["metal","drvo"],
     "mac": ["cekic","metal","drvo"],
     "kramp": ["cekic","metal","drvo"],
     "sjekira":["mac","cekic","metal","drvo"],
-    "lopata":["cekic",],
+    "lopata":["cekic","drvo",],
     "krevet": ["drvo","cvijet"],
     "brasno": ["psenica"],
     "tjesto":["brasno","voda"],
@@ -16,28 +19,47 @@ kraft = {
     "cigla":["kamen","pjesak"],
     "kanta":["metal","cekic","voda"],
     "kanta_vode":["kanta","voda"],
-    "zlatna_jabuka":["jabuka","zlato"]
+    "zlatna_jabuka":["jabuka","zlato"],
+    "barut":["ugalj"],
+    "bomba":["barut","metal"]
 }
 
 class Player:
-    def __init__(self, X, Y, inv, inHand):
-        self.posX: X
+    def __init__(self, X, Y, inv, inHand,biome):
+        self.posX = X
         self.posY = Y
         self.inventory = inv
         self.equipped = inHand
+        self.loc = biome
+
+def biomGenerator(playerStat,bioms):
+    biom = random.choice(bioms)
+    playerStat.loc = biom
 
 #funkcija za dodavanje stvari u inventory i prima klasu Player
 def addToInv(playerStat,res):
+    unos = input("Unesite neki od resursa: ")
+    if unos == "voda" and playerStat.loc == "okeanu":
+        playerStat.inventory.append("voda")
 
-    unos = input("Unesite koji item zelite da dodate>> ")
-    if unos in res:
+    elif unos == "voda" and not playerStat.loc == "okeanu":
+        print("niste u okeanu")
 
+    elif unos in res:
         playerStat.inventory.append(unos)
-        print(unos,'je sad u vasem inventoriu')
     else:
-        print("resors nepoznat")
+        print("resurs nije prepoznat")
 
-#funkcija za printanje inventorya
+
+
+def mapa(playerStat,biomList):
+    print("X:", playerStat.posX)
+    print("Y:", playerStat.posY)
+
+    
+
+
+#funkcija za printanje i    nventorya
 def printInv(playerStat):
     Inventory = playerStat.inventory
     print(*Inventory, sep="   ")
@@ -47,7 +69,7 @@ def equip(playerStat):
     inHand = input("Unesite koji item iz inventory-a da uzmete u ruku(equipate)>> ")
     if inHand in playerStat.inventory:
         playerStat.equipped = inHand
-        #hello hi an Tshus
+        #hello hi and Tshus
     else:
         print("Item nemate u inventory-u")
  
@@ -93,7 +115,7 @@ def craft(playerStat, kraf,Nres):
 
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
-player = Player(X=0, Y=0, inv=["hand",], inHand="hand")
+player = Player(X=0, Y=0, inv=["hand",], inHand="hand",biome="okeanu")
 
 app = True
 while app == True:
@@ -111,6 +133,7 @@ while app == True:
 
     elif unos == "pomjeri":
         move(player)
+        biomGenerator(player,bioms)
 
     elif unos == "izbaci":
         removeFromInv(player)
@@ -120,6 +143,11 @@ while app == True:
 
     elif unos == "kraj":
         app = False
+
+
+    elif unos == "mapa":
+        mapa(player,bioms)
+        print("sada ste u", player.loc)
 
     elif unos == "pomoc":
         print("Dobrodosli u terminal-minecraft")
