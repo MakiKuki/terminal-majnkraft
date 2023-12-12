@@ -334,5 +334,3 @@ while app == True:
         print("Da bi izasli iz igre ukucajte 'kraj'")
     else:
         print("komanda nije validna")
-
-   
