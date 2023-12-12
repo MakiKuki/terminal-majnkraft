@@ -1,10 +1,21 @@
+
+#importujemo random modul
 import random
-# 2D Minecraft
-#definisemo klasu Player
+
 print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte pomoc")
+
+
+#Definisemo portebne liste
 resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","plastika","zlato","jabuka","ugalj"]
 notResouces = ["cekic","mac","kramp","sjekira","lopata"]
 bioms = ["livadi","sumi","snjezomi_biomu","okeanu","pustinji","savani","kanjonu"]
+armour = ['drvena_kapa', 'drvena_majca', 'drvene_cipele', 'metalna_kapa', 'metalna_majca', 'metalne_cipele', 'metalne_hlace', 'zlatna_kapa', 'zlatna_majca', 'zlatne_cipele', 'zlatne_hlace']
+
+head = ['drvena_kapa', 'metalna_kapa', 'zlatna_kapa']
+chest = ['drvena_majca', 'metalna_majca', 'zlatna_majca']
+legs = ['metalne_hlace', 'zlatne_hlace']
+boots = ['drvene_cipele', 'metalne_cipele', 'zlatne_cipele']
+#Definisemo dict sa svim receptima i itemima
 
 kraft = {
     "cekic": ["metal","drvo"],
@@ -12,6 +23,9 @@ kraft = {
     "kramp": ["cekic","metal","drvo"],
     "sjekira":["mac","cekic","metal","drvo"],
     "lopata":["cekic","drvo",],
+
+
+
     "krevet": ["drvo","cvijet"],
     "brasno": ["psenica"],
     "tjesto":["brasno","voda"],
@@ -19,18 +33,47 @@ kraft = {
     "cigla":["kamen","pjesak"],
     "kanta":["metal","cekic","voda"],
     "kanta_vode":["kanta","voda"],
+
+
     "zlatna_jabuka":["jabuka","zlato"],
     "barut":["ugalj"],
-    "bomba":["barut","metal"]
+    "bomba":["barut","metal"],
+    "tanjir":["metal"],
+
+    "drvena_kapa":["drvo"],
+    "drvena_majca":["drvo","drvo","drvo"],
+    "drvene_cipele":["drvo","drvo"],
+
+
+    "metalna_kapa":["metal","drvena_kapa"],
+    "metalna_majca":["metal","metal","metal","drvena_majca"],
+    "metalne_cipele":["metal","metal","drvene_cipele"],
+    "metalne_hlace":["metal","metal"],
+
+    "zlatna_kapa":["zlato","metalna_kapa"],
+    "zlatna_majca":["zlato","zlato","zlato","metalna_majca"],
+    "zlatne_cipele":["zlato","zlato","metalne_cipele"],
+    "zlatne_hlace":["zlato","zlato","metalne_hlace"]
 }
 
+
+
+
+#definisemo klasu Player
+
 class Player:
-    def __init__(self, X, Y, inv, inHand,biome):
+    def __init__(self, X, Y, inv, inHand, biome, glava, noge, stopala, trup):
         self.posX = X
         self.posY = Y
         self.inventory = inv
         self.equipped = inHand
         self.loc = biome
+        self.head = glava
+        self.body = trup
+        self.legs = noge
+        self.feet = stopala
+
+#Ova funkcija generise random biome svaki put kad je pozvana
 
 def biomGenerator(playerStat,bioms):
     biom = random.choice(bioms)
@@ -51,18 +94,20 @@ def addToInv(playerStat,res):
         print("resurs nije prepoznat")
 
 
-
-def mapa(playerStat,biomList):
+#funkcija koja prima player klasu i ispisuje X i Y poziciju
+def mapa(playerStat):
     print("X:", playerStat.posX)
     print("Y:", playerStat.posY)
+   
 
-    
 
-
-#funkcija za printanje i    nventorya
+#funkcija za printanje torbe
 def printInv(playerStat):
     Inventory = playerStat.inventory
     print(*Inventory, sep="   ")
+
+
+
 
 #funkcija koja prima parametar klasu Player i ona stavlja stvari u ruku igraca(equipa)
 def equip(playerStat):
@@ -73,6 +118,11 @@ def equip(playerStat):
     else:
         print("Item nemate u inventory-u")
  
+
+
+
+
+
 #funkcija prima za parametar klasu Player i ona izbacuje stvari iz inventorija
 def removeFromInv(playerStat):
     inv = playerStat.inventory
@@ -83,15 +133,68 @@ def removeFromInv(playerStat):
         print("ovaj item nemate u inventoriu>> ")
     playerStat.inventory = inv
 
+
+
+
+
+
 def move(playerStat):
     playerStat.posX = input("Unesite nove X koordinate>> ")
     playerStat.posY = input("Unesite Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
+
+
+def changeArmor(playerStat,head,chest,boots,legs):
+    unos = input("Unesite neki od dijelova oklopa u svojoj torbi: ")
+
+
+    if unos in head and playerStat.inventory:
+        playerStat.head = unos
+    elif unos in head and not playerStat.inventory:
+        print("Nemate to u torbi")
+
+    elif unos not in head and unos in playerStat.inventory:
+        print("Komad oklopa nije odgovarajuci!")
+
+
+
+    if unos in chest and playerStat.inventory:
+        playerStat.chest = unos
+    elif unos in chest and not playerStat.inventory:
+        print("Nemate to u torbi")
+
+    elif unos not in chest and unos in playerStat.inventory:
+        print("Komad oklopa nije odgovarajuci!")
+
+    
+    if unos in boots and playerStat.inventory:
+        playerStat.boots = unos
+    elif unos in boots and not playerStat.inventory:
+        print("Nemate to u torbi")
+
+    elif unos not in boots and unos in playerStat.inventory:
+        print("Komad oklopa nije odgovarajuci!")
+
+   
+    if unos in legs and playerStat.inventory:
+        playerStat.legs = unos
+    elif unos in legs and not playerStat.inventory:
+        print("Nemate to u torbi")
+
+    elif unos not in legs and unos in playerStat.inventory:
+        print("Komad oklopa nije odgovarajuci!")
+
+
+
+
+
+
 def craft(playerStat, kraf,Nres):
     kra = list(kraf)
     print(*playerStat.inventory, sep="   ")
     print("Od ovih resursa ce te nesto kraftati")
+
 
     unos = input("Koji item hocete da kraftate>> ")
 
@@ -111,11 +214,17 @@ def craft(playerStat, kraf,Nres):
 
     print("Uspjesno ste kraftali", unos)
 
-    #hello,open the noor
-
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
-player = Player(X=0, Y=0, inv=["hand",], inHand="hand",biome="okeanu")
+player = Player(X=0, Y=0, inv=["hand",], inHand="hand",biome="okeanu",glava = "",noge = "",stopala="", trup = "")
+
+
+
+
+
+
+
+
 
 app = True
 while app == True:
@@ -134,6 +243,9 @@ while app == True:
     elif unos == "pomjeri":
         move(player)
         biomGenerator(player,bioms)
+
+    elif unos == "oklop":
+        changeArmor(player,head,chest,boots,legs)
 
     elif unos == "izbaci":
         removeFromInv(player)
@@ -157,6 +269,9 @@ while app == True:
         print("Da bi promjenili lokaciju igraca ukucajte 'pomjeri'")
         print("Da bi izbacili item iz torbe koristite komandu 'izbaci'")
         print("Da bi napravili nesto od resorsa u torbi ukucajte 'napravi'")
+        print("Ako zelite da saznate koordinate i biom vaseg lika ukucajte 'mapa'")
         print("Da bi izasli iz igre ukucajte 'kraj'")
     else:
         print("komanda nije validna")
+
+   
