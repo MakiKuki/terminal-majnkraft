@@ -6,15 +6,27 @@ print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte
 
 
 #Definisemo portebne liste
-resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","plastika","zlato","jabuka","ugalj"]
+resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","zlato","jabuka","ugalj"]
 notResouces = ["cekic","mac","kramp","sjekira","lopata"]
-bioms = ["livadi","sumi","snjezomi_biomu","okeanu","pustinji","savani","kanjonu"]
+bioms = ["livadi","sumi","snjezom_biomu","okeanu","pustinji","savani","kanjonu"]
 armour = ['drvena_kapa', 'drvena_majca', 'drvene_cipele', 'metalna_kapa', 'metalna_majca', 'metalne_cipele', 'metalne_hlace', 'zlatna_kapa', 'zlatna_majca', 'zlatne_cipele', 'zlatne_hlace']
 
 head = ['drvena_kapa', 'metalna_kapa', 'zlatna_kapa']
 chest = ['drvena_majca', 'metalna_majca', 'zlatna_majca']
 legs = ['metalne_hlace', 'zlatne_hlace']
 boots = ['drvene_cipele', 'metalne_cipele', 'zlatne_cipele']
+
+livada = ["psenica","cvijet"]
+suma = ["drvo","jabuka"]
+snjezni_biom = ["drvo","metal"]
+okean = ["voda"]
+pustinja = ["pjesak","tkanina"]
+savana = ["drvo"]
+kanjon = ["zlato","pjesak","ugalj"]
+
+#               0      1        2        3       4       5      6
+listaBioma = [livada,suma,snjezni_biom,okean,pustinja,savana,kanjon]
+
 #Definisemo dict sa svim receptima i itemima
 
 kraft = {
@@ -40,9 +52,9 @@ kraft = {
     "bomba":["barut","metal"],
     "tanjir":["metal"],
 
-    "drvena_kapa":["drvo"],
-    "drvena_majca":["drvo","drvo","drvo"],
-    "drvene_cipele":["drvo","drvo"],
+    "drvena_kapa":["drvo","tkanina"],
+    "drvena_majca":["drvo","drvo","drvo","tkanina"],
+    "drvene_cipele":["drvo","drvo","tkanina"],
 
 
     "metalna_kapa":["metal","drvena_kapa"],
@@ -80,18 +92,61 @@ def biomGenerator(playerStat,bioms):
     playerStat.loc = biom
 
 #funkcija za dodavanje stvari u inventory i prima klasu Player
-def addToInv(playerStat,res):
+def addToInv(playerStat,listaBioma):
     unos = input("Unesite neki od resursa: ")
+
+
     if unos == "voda" and playerStat.loc == "okeanu":
         playerStat.inventory.append("voda")
 
     elif unos == "voda" and not playerStat.loc == "okeanu":
-        print("niste u okeanu")
+        print("niste u odgovarajucem biomu")
 
-    elif unos in res:
+
+    elif unos in listaBioma[0] and playerStat.loc == "livadi":
         playerStat.inventory.append(unos)
-    else:
-        print("resurs nije prepoznat")
+
+    elif unos in listaBioma[0] and not playerStat.loc == "livadi":
+        print("niste u odgovarajucem biomu")
+
+
+
+    elif unos in listaBioma[1] and playerStat.loc == "sumi":
+        playerStat.inventory.append(unos)
+
+    elif unos in listaBioma[0] and not playerStat.loc == "sumi":
+        print("niste u odgovarajucem biomu")
+
+
+
+    elif unos in listaBioma[2] and playerStat.loc == "snjezom_biomu":
+        playerStat.inventory.append(unos)
+
+    elif unos in listaBioma[2] and not playerStat.loc == "snjezom_biomu":
+        print("niste u odgovarajucem biomu")
+
+
+    elif unos in listaBioma[4] and playerStat.loc == "pustinji":
+        playerStat.inventory.append(unos)
+
+    elif unos in listaBioma[4] and not playerStat.loc == "pustinji":
+        print("niste u odgovarajucem biomu")
+
+    elif unos in listaBioma[5] and playerStat.loc == "savani":
+        playerStat.inventory.append(unos)
+
+    elif unos in listaBioma[5] and not playerStat.loc == "savani":
+        print("niste u odgovarajucem biomu")
+
+
+    elif unos in listaBioma[6] and playerStat.loc == "kanjonu":
+        playerStat.inventory.append(unos)
+
+    elif unos in listaBioma[6] and not playerStat.loc == "kanjonu":
+        print("niste u odgovarajucem biomu")
+
+
+
 
 
 #funkcija koja prima player klasu i ispisuje X i Y poziciju
@@ -231,8 +286,11 @@ while app == True:
     unos = input("Unesite komandu{> ")
 
 
+    if unos == "hp":
+        print(100)
+
     if unos == "dodaj":
-        addToInv(player,resouces)
+        addToInv(player,listaBioma)
 
     elif unos == "torba":
         printInv(player)
@@ -250,6 +308,14 @@ while app == True:
     elif unos == "izbaci":
         removeFromInv(player)
 
+
+    elif unos == "oklop_info":
+        print(player.head)
+        print(player.body)
+        print(player.legs)
+        print(player.feet)
+
+
     elif unos == "napravi":
         craft(player,kraft,notResouces)
 
@@ -258,7 +324,7 @@ while app == True:
 
 
     elif unos == "mapa":
-        mapa(player,bioms)
+        mapa(player)
         print("sada ste u", player.loc)
 
     elif unos == "pomoc":
