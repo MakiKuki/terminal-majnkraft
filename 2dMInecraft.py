@@ -6,14 +6,12 @@ print("Dobrodosli u terminal minecraft.Za vise informacija o koriscenju ukucajte
 
 
 #Definisemo portebne liste
-resouces = ["kamen","zemlja","drvo","metal","psenica","cvijet","pjesak","tkanina","zlato","jabuka","ugalj"]
 notResouces = ["cekic","mac","kramp","sjekira","lopata"]
 bioms = ["livadi","sumi","snjezom_biomu","okeanu","pustinji","savani","kanjonu"]
 armour = ['drvena_kapa', 'drvena_majca', 'drvene_cipele', 'metalna_kapa', 'metalna_majca', 'metalne_cipele', 'metalne_hlace', 'zlatna_kapa', 'zlatna_majca', 'zlatne_cipele', 'zlatne_hlace']
-
 head = ['drvena_kapa', 'metalna_kapa', 'zlatna_kapa']
 chest = ['drvena_majca', 'metalna_majca', 'zlatna_majca']
-legs = ['metalne_hlace', 'zlatne_hlace']
+legs= ['metalne_hlace', 'zlatne_hlace']
 boots = ['drvene_cipele', 'metalne_cipele', 'zlatne_cipele']
 
 livada = ["psenica","cvijet"]
@@ -84,6 +82,8 @@ class Player:
         self.body = trup
         self.legs = noge
         self.feet = stopala
+
+        
 
 #Ova funkcija generise random biome svaki put kad je pozvana
 
@@ -195,7 +195,7 @@ def removeFromInv(playerStat):
 
 def move(playerStat):
     playerStat.posX = input("Unesite nove X koordinate>> ")
-    playerStat.posY = input("Unesite Y koordinate>> ")
+    playerStat.posY = input("Unesite nove Y koordinate>> ")
     print("Nove pozicije vaseg lika su: X =", playerStat.posX,"Y =",playerStat.posY)
 
 
@@ -271,13 +271,7 @@ def craft(playerStat, kraf,Nres):
 
 
 #pravimo instancu klase Player koja se zove player(pazi na veliko i malo slovo)
-player = Player(X=0, Y=0, inv=["hand",], inHand="hand",biome="okeanu",glava = "",noge = "",stopala="", trup = "")
-
-
-
-
-
-
+player = Player(X=0, Y=0, inv=["ruka"], inHand="hand",biome="okeanu",glava = "",noge = "",stopala="", trup = "")
 
 
 
@@ -285,11 +279,12 @@ app = True
 while app == True:
     unos = input("Unesite komandu{> ")
 
+    
 
     if unos == "hp":
         print(100)
 
-    if unos == "dodaj":
+    elif unos == "dodaj":
         addToInv(player,listaBioma)
 
     elif unos == "torba":
